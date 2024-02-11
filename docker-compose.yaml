@@ -18,7 +18,7 @@ services:
   medusa-backend:
     build:
       context: .
-      dockerfile: Dockerfile.backend # Ensure you have a Dockerfile for backend setup
+      dockerfile: Dockerfile.backend
     ports:
       - "9000:9000"
     environment:
@@ -29,6 +29,33 @@ services:
       - postgres
       - redis
 
+  medusa-admin:
+    build:
+      context: ./path/to/admin
+      dockerfile: Dockerfile.admin # Adjust this path to where your Dockerfile for the admin is located
+    ports:
+      - "7000:80" # Assuming Nginx serves on port 80, map it to 7000 on the host
+    depends_on:
+      - medusa-backend
+
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./nginx:/etc/nginx/conf.d # Assuming you have your Nginx configuration in a directory named 'nginx' at the root
+      - medusa_admin_build:/usr/share/nginx/html:ro
+    ports:
+      - "80:80" # Map Nginx to port 80 on the host
+    depends_on:
+      - medusa-admin
+
 volumes:
   postgres_data:
   redis_data:
+  medusa_admin_build: # This volume will be used to store the built admin panel
+
+networks:
+  coolify:
+    name: coolify
+    external: true
+
+
