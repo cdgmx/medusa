@@ -29,14 +29,15 @@ services:
       - postgres
       - redis
 
-  medusa-admin:
-    build:
-      context: ./path/to/admin
-      dockerfile: Dockerfile.admin # Adjust this path to where your Dockerfile for the admin is located
-    ports:
-      - "7000:80" # Assuming Nginx serves on port 80, map it to 7000 on the host
-    depends_on:
-      - medusa-backend
+  # medusa-admin:
+  #   build:
+  #     context: ./path/to/admin
+  #     dockerfile: Dockerfile.admin # Adjust this path to where your Dockerfile for the admin is located
+  #   ports:
+  #     - "7000:80" # Assuming Nginx serves on port 80, map it to 7000 on the host
+  #   command: npm run start
+  #   depends_on:
+  #     - medusa-backend
 
 volumes:
   postgres_data:
