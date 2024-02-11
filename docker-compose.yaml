@@ -38,16 +38,6 @@ services:
     depends_on:
       - medusa-backend
 
-  nginx:
-    image: nginx:stable-alpine
-    volumes:
-      - ./nginx:/etc/nginx/conf.d # Assuming you have your Nginx configuration in a directory named 'nginx' at the root
-      - medusa_admin_build:/usr/share/nginx/html:ro
-    ports:
-      - "80:80" # Map Nginx to port 80 on the host
-    depends_on:
-      - medusa-admin
-
 volumes:
   postgres_data:
   redis_data:
