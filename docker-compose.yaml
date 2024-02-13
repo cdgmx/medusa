@@ -3,13 +3,12 @@ version: '3.8'
 services:
   postgres:
     image: postgres:13
+    ports:
+      - 5433:5432
     environment:
-      POSTGRES_USER: medusa_user
-      POSTGRES_PASSWORD: medusa_password
-      POSTGRES_DB: medusa_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: medusa-docker
   redis:
     image: redis:6
     volumes:
@@ -22,7 +21,7 @@ services:
     ports:
       - "9000:9000"
     environment:
-      DATABASE_URL: postgresql://medusa_user:medusa_password@postgres/medusa_db
+      DATABASE_URL: postgresql://postgres:postgres@postgres/medusa-docker
       REDIS_URL: redis://redis:6379
     command: npm run start
     depends_on:
@@ -35,7 +34,6 @@ services:
   #     dockerfile: Dockerfile.admin # Adjust this path to where your Dockerfile for the admin is located
   #   ports:
   #     - "7000:80" # Assuming Nginx serves on port 80, map it to 7000 on the host
-  #   command: npm run start
   #   depends_on:
   #     - medusa-backend
 
@@ -44,9 +42,5 @@ volumes:
   redis_data:
   medusa_admin_build: # This volume will be used to store the built admin panel
 
-networks:
-  coolify:
-    name: coolify
-    external: true
 
 
