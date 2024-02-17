@@ -15,9 +15,9 @@ services:
       - postgres
       - redis
   postgres-x:
-    image: postgres:13
     build:
       context: .
+      dockerfile: Dockerfile.backend
     ports:
       - 5433:5432
     environment:
