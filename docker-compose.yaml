@@ -8,15 +8,15 @@ services:
     ports:
       - "9000:9000"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres-x/medusa-docker
+      DATABASE_URL: postgresql://postgres:postgres@postgres/medusa-docker
       REDIS_URL: redis://redis:6379
     command: npm run start
     depends_on:
       - postgres
       - redis
-  postgres-x:
+  postgres:
     image: postgres:13
-    container_name: postgres-x
+    container_name: postgres
     build:
       context: .
     ports:
