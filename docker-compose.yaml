@@ -11,16 +11,6 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: medusa-docker
     container_name: postgres
-    labels:
-      - traefik.enable=true
-      - traefik.http.middlewares.gzip.compress=true
-      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
-      - coolify.managed=true
-      - coolify.version=4.0.0-beta.219
-      - coolify.applicationId=2
-      - coolify.type=application
-      - coolify.name=medusa-postgres
-      - coolify.pullRequestId=0
   redis:
     image: redis:6
     volumes:
