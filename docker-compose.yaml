@@ -1,38 +1,48 @@
-x-logging:
-  logging:
-    driver: json-file
-    options:
-      max-file: '5'
-      max-size: 10m
-version: '3'
+version: "3"
+
 services:
-  appwrite:
-    image: 'appwrite/appwrite:1.4'
-    container_name: appwrite
-    logging:
-      driver: json-file
-      options:
-        max-file: '5'
-        max-size: 10m
-    volumes:
-      - 'appwrite-uploads:/storage/uploads:rw'
-      - 'appwrite-cache:/storage/cache:rw'
-      - 'appwrite-config:/storage/config:rw'
-      - 'appwrite-certificates:/storage/certificates:rw'
-      - 'appwrite-functions:/storage/functions:rw'
-    depends_on:
-      - appwrite-mariadb
-      - appwrite-redis
-      - appwrite-influxdb
+  medusa-x:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "9000:9000"
     environment:
-      - SERVICE_FQDN_APPWRITE=/
+      DATABASE_URL: postgresql://postgres:postgres@postgres-x/medusa-docker
+      REDIS_URL: redis://redis:6379
+    command: npm run start
+    depends_on:
+      - postgres
+      - redis
+  postgres-x:
+    image: postgres:13
+    container_name: postgres-x
+    build:
+      context: .
+    ports:
+      - 5433:5432
+    environment:
+      SERVICE_FQDN_MEDUSA: /medusa
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: medusa-docker
+    
+  redis:
+    image: redis:6
+    volumes:
+      - redis_data:/data
+
+  # medusa-admin:
+  #   build:
+  #     context: ./path/to/admin
+  #     dockerfile: Dockerfile.admin # Adjust this path to where your Dockerfile for the admin is located
+  #   ports:
+  #     - "7000:80" # Assuming Nginx serves on port 80, map it to 7000 on the host
+  #   depends_on:
+  #     - medusa-backend
+
 volumes:
-  appwrite-mariadb: null
-  appwrite-redis: null
-  appwrite-cache: null
-  appwrite-uploads: null
-  appwrite-certificates: null
-  appwrite-functions: null
-  appwrite-builds: null
-  appwrite-influxdb: null
-  appwrite-config: null
+  postgres_data:
+  redis_data:
+  medusa_admin_build: # This volume will be used to store the built admin panel
+
