@@ -17,7 +17,6 @@ services:
   postgres-x:
     build:
       context: .
-      dockerfile: Dockerfile.backend
     ports:
       - 5433:5432
     environment:
