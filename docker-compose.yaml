@@ -22,10 +22,7 @@ services:
     ports:
       - 5433:5432
     environment:
-      SERVICE_FQDN_MEDUSA: /medusa
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: medusa-docker
+      - SERVICE_FQDN_APPWRITE=/
     
   redis:
     image: redis:6
