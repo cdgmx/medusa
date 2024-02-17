@@ -6,7 +6,7 @@ services:
     ports:
       - 5433:5432
     environment:
-      SERVICE_FQDN_APPWRITE:
+      SERVICE_FQDN_MEDUSA:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: medusa-docker
