@@ -23,7 +23,26 @@ services:
       - 5433:5432
     environment:
       - SERVICE_FQDN_APPWRITE=/
-    
+  appwrite:
+    image: 'appwrite/appwrite:1.4'
+    container_name: appwrite
+    logging:
+      driver: json-file
+      options:
+        max-file: '5'
+        max-size: 10m
+    volumes:
+      - 'appwrite-uploads:/storage/uploads:rw'
+      - 'appwrite-cache:/storage/cache:rw'
+      - 'appwrite-config:/storage/config:rw'
+      - 'appwrite-certificates:/storage/certificates:rw'
+      - 'appwrite-functions:/storage/functions:rw'
+    depends_on:
+      - appwrite-mariadb
+      - appwrite-redis
+      - appwrite-influxdb
+    environment:
+      - SERVICE_FQDN_APPWRITE=/
   redis:
     image: redis:6
     volumes:
