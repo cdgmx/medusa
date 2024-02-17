@@ -16,6 +16,8 @@ services:
       - redis
   postgres-x:
     image: postgres:13
+    build:
+      context: .
     ports:
       - 5433:5432
     environment:
