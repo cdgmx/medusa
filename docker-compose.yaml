@@ -15,7 +15,7 @@ services:
       - postgres
       - redis
   postgres-x:
-    container_name: appwritex
+    image: 'appwrite/appwrite:1.4'
     container_name: postgres-x
     build:
       context: .
