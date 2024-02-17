@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   postgres:
@@ -16,7 +16,7 @@ services:
     volumes:
       - redis_data:/data
 
-  medusa-backend:
+  medusa-x:
     build:
       context: .
       dockerfile: Dockerfile.backend
@@ -43,6 +43,4 @@ volumes:
   postgres_data:
   redis_data:
   medusa_admin_build: # This volume will be used to store the built admin panel
-
-
 
