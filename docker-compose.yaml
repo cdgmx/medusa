@@ -10,7 +10,9 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: medusa-docker
     labels:
-      - traefik.enable=true
+      - "traefik.enable=true"
+      - "traefik.http.routers.postgres.rule=Host(`postgres1.goresolvr.xyz`) && PathPrefix(`/postgres`)"
+      - "traefik.http.services.postgres.loadbalancer.server.port=5432"
   redis:
     image: redis:6
     volumes:
